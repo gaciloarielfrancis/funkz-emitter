@@ -71,7 +71,7 @@ emitter.on("update", () => console.log("[B] update received"), "B");
 emitter.emit("update");
 
 // Emitting again triggers only listener B
-emitter.emit("update", "B");
+emitter.emit("update", null, "B");
 
 // Remove only listener with identifier "A"
 emitter.off("update", "A");
