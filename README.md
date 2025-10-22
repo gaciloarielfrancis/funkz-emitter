@@ -149,3 +149,6 @@ setTimeout(() => {
 - All pages import from "funkz-emitter", which uses a shared singleton emitter internally.
 - Any call to emit() in one page automatically triggers listeners in another.
 - Works even when modules are dynamically loaded — no need to pass instances around.
+
+### License
+MIT © 2025 Ariel Francis Fernando Gacilo
