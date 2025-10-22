@@ -40,26 +40,28 @@ import EventEmitter from "funkz-emitter";
 const emitter = new EventEmitter();
 
 // Example data type
-interface TimeoutData {
+interface IntervalData {
     message: string;
     duration: number;
 }
 
 // Listening for an event
-emitter.on<TimeoutData>("timeout", (data) => {
-    console.log(`[on] Timeout event triggered:`, data.message, "in", data.duration, "ms");
+emitter.on<IntervalData>("interval", (data) => {
+    console.log(`[on] Interval event triggered:`, data.message, "in", data.duration, "ms");
 });
 
 // Listening once (auto removed after first trigger)
-emitter.once<TimeoutData>("timeout", (data) => {
+emitter.once<IntervalData>("interval", (data) => {
     console.log(`[once] This will only appear once:`, data.message);
 });
 
-// Emitting an event with data
-emitter.emit<TimeoutData>("timeout", {
-    message: "Operation took too long.",
-    duration: 3000,
-});
+setInterval(() => {
+    // Emitting an event with data
+    emitter.emit<IntervalData>("interval", {
+        message: "Operation took too long.",
+        duration: 3000,
+    });
+}, 3000);
 
 // Attaching multiple listeners with identifiers
 emitter.on("update", () => console.log("[A] update received"), "A");
@@ -75,12 +77,18 @@ emitter.emit("update", "B");
 emitter.off("update", "A");
 
 // Emitting with custom type data
-emitter.emit<number>("progress", 75);
 emitter.on<number>("progress", (data) => {
     console.log("Progress:", data, "%");
 });
+emitter.emit<number>("progress", 75);
 
 ```
+### How It Works
+- The emitter acts as a message hub.
+- You can register listeners for specific event names (on, once).
+- Later, when you emit that event name (emit), all matching listeners get called.
+- You can remove listeners when they’re no longer needed (off).
+
 ## Using Global Emit — No Instance Required
 This example shows how to emit events globally without the need to declare or reference an emitter variable. Perfect for shared, application-wide event handling.
 
@@ -137,7 +145,7 @@ setTimeout(() => {
 }, 5000);
 
 ```
-## How It Works
+### How It Works
 - All pages import from "funkz-emitter", which uses a shared singleton emitter internally.
 - Any call to emit() in one page automatically triggers listeners in another.
 - Works even when modules are dynamically loaded — no need to pass instances around.

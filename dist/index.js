@@ -5,27 +5,32 @@ export default class EventEmitter {
     emit(event, data, identifier) {
         for (let i = this._registry.length - 1; i > -1; i--) {
             if (this._registry[i].event === event) {
-                this._registry[i].callback(data);
-                if (!this._registry[i].repeated)
-                    this._registry.splice(i, 1);
+                const index = identifier ? (this._registry[i].identifier === identifier ? i : -1) : i;
+                if (index > -1)
+                    this.trigger(index, data);
             }
         }
     }
     on(event, callback, identifier) {
-        this.register(event, callback);
+        this.register(event, callback, identifier);
     }
     once(event, callback, identifier) {
-        this.register(event, callback, false);
+        this.register(event, callback, identifier, false);
     }
     off(event, identifier) {
         for (let i = this._registry.length - 1; i > -1; i--) {
-            if (this._registry[i].event === event)
+            if (this._registry[i].event === event && this._registry[i].identifier === identifier)
                 this._registry.splice(i, 1);
         }
     }
-    register(event, callback, repeated = true) {
-        const register = { event, repeated, callback };
+    register(event, callback, identifier, repeated = true) {
+        const register = { event, repeated, callback, identifier };
         this._registry.push(register);
+    }
+    trigger(index, data) {
+        this._registry[index].callback(data);
+        if (!this._registry[index].repeated)
+            this._registry.splice(index, 1);
     }
 }
 const emitter = new EventEmitter();

@@ -11,6 +11,7 @@ export default class EventEmitter implements IEventEmitter {
     once<T = undefined>(event: string, callback: (data: T) => void, identifier?: string | number): void;
     off(event: string, identifier?: string | number): void;
     private register;
+    private trigger;
 }
 declare global {
     interface Window {
