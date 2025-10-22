@@ -1,0 +1,43 @@
+{
+	"name": "funkz-emitter",
+	"version": "1.0.0",
+	"description": "Allowing parts of your application to communicate asynchronously without being tightly coupled.",
+	"main": "dist/index.js",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"dev": "ts-node src/index.ts",
+		"build": "tsc",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/gaciloarielfrancis/funkz-emitter.git"
+	},
+	"keywords": [
+		"emitter",
+		"event",
+		"dispatcher",
+		"signal",
+		"message",
+		"bus",
+		"pixi",
+		"vue",
+		"react",
+		"typescript",
+		"global"
+	],
+	"author": "Ariel Francis Fernando Gacilo",
+	"license": "MIT",
+	"type": "commonjs",
+	"bugs": {
+		"url": "https://github.com/gaciloarielfrancis/funkz-emitter/issues"
+	},
+	"homepage": "https://github.com/gaciloarielfrancis/funkz-emitter#readme",
+	"devDependencies": {
+		"typescript": "^5.9.3"
+	}
+}
